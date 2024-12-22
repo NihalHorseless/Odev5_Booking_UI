@@ -16,4 +16,4 @@ val SelectiveYellow = Color(0xFFFEBA02)
 
 val LightSqueeze = Color(0xFFF2F6FA)
 val DoveGrey = Color(0xFF666666)
-
+val LighterDark = Color(0xFF393939)
