@@ -11,37 +11,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.odev5.ui.screen.MainScreen
 import com.example.odev5.ui.theme.Odev5Theme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
         setContent {
             Odev5Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+MainScreen()
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Odev5Theme {
-        Greeting("Android")
-    }
-}

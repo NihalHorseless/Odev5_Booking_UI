@@ -9,28 +9,25 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+
+private val LightColorScheme = lightColorScheme(
+    primary = PrimaryBlue,      // Blue used in the header background
+    secondary = SelectiveYellow,    // Yellow used in borders (e.g., search fields)
+    tertiary = DoveGrey,     // Light gray used for background components
+    background = Color.White,   // White background
+    surface = Color.White,      // White surfaces
+    onPrimary = Color.White,    // White text on primary blue
+    onSecondary = Color.Black,  // Black text/icons on yellow
+    onBackground = Color.Black, // Black text/icons on white background
+    onSurface = Color.Black    // Black text/icons on white surface
+)
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
     secondary = PurpleGrey80,
     tertiary = Pink80
-)
-
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
 )
 
 @Composable
