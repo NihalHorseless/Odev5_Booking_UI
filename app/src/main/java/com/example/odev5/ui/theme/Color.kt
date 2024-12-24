@@ -11,9 +11,9 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 val PrimaryBlue = Color(0xFF003580)
-val Cerulean = Color(0xFF009FE3)
+val Cerulean = Color(0xFF0666B3)
 val SelectiveYellow = Color(0xFFFEBA02)
 
-val LightSqueeze = Color(0xFFF2F6FA)
+val LightSqueeze = Color(0xFFFCFCFF)
 val DoveGrey = Color(0xFF666666)
 val LighterDark = Color(0xFF393939)

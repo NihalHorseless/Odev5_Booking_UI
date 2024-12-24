@@ -34,3 +34,4 @@ val Typography = Typography(
     )
     */
 )
+val roboto_medium = FontFamily(Font(R.font.roboto_medium))
