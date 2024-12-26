@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -81,7 +82,7 @@ fun MainScreen() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height((screenHeight / 7).dp)
+                    .height((screenHeight / 7 + 10).dp)
                     .background(PrimaryBlue),
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -90,7 +91,7 @@ fun MainScreen() {
                 TopBarChipsSection()
             }
         }, bottomBar = {
-            BottomAppBarSection(choosenBottomBar)
+            BottomAppBarSection(choosenBottomBar,screenHeight)
         })
     { paddingValues ->
         Column(
@@ -104,8 +105,7 @@ fun MainScreen() {
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
             SearchFieldSection()
-            Spacer(modifier = Modifier.height(36.dp))
-            HotelsSection(modifier = Modifier.fillMaxWidth().height((screenHeight/2).dp),screenWidth)
+            HotelsSection(modifier = Modifier.padding(bottom = 12.dp).fillMaxWidth().height((screenHeight/3 + 20).dp),screenWidth)
         }
     }
 }
@@ -117,22 +117,23 @@ Text(text = "Last-minute Ideas",modifier = Modifier.padding(start = 8.dp), fontS
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(),
+                .fillMaxHeight()
+                .background(Color.White),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp) // Adjust spacing as needed
         ) {
             items(listOf(
-                Hotel("Max Royale - Belek", "200 km", "250 EUR", R.drawable.hotel_one),
-                Hotel("Gloria Resort - Belek", "190 km", "150 EUR", R.drawable.hotel_two),
-                Hotel("Ali Bey Club", "195 km", "150 EUR", R.drawable.hotel_third),
-                Hotel("Royal Taj Mahal", "140 km", "100 EUR", R.drawable.hotel_fourth)
+                Hotel("Max Royale - Belek", "200 km", "250 €", R.drawable.hotel_one),
+                Hotel("Gloria Resort - Belek", "190 km", "150 €", R.drawable.hotel_two),
+                Hotel("Ali Bey Club", "195 km", "150 €", R.drawable.hotel_third),
+                Hotel("Royal Taj Mahal", "140 km", "100 €", R.drawable.hotel_fourth)
             )) { hotel ->
                 HotelItem(
                     hotelName = hotel.name,
                     hotelDistance = hotel.distance,
                     hotelPrice = hotel.price,
                     imageRes = hotel.imageRes,
-                    modifier = Modifier.width((screenWidth / 2+20).dp)
+                    modifier = Modifier.width((screenWidth / 2 + 20).dp)
                 )
             }
         }
@@ -146,10 +147,10 @@ Column(modifier = modifier
     .fillMaxHeight().background(LightSqueeze),
     horizontalAlignment = Alignment.Start,
     verticalArrangement = Arrangement.SpaceEvenly) {
-Image(contentScale = ContentScale.FillBounds,modifier = Modifier.fillMaxHeight(0.7f).fillMaxWidth().clip(shape = RoundedCornerShape(12.dp)), alignment = Alignment.TopCenter,painter = painterResource(imageRes), contentDescription = "")
-    Text(text = hotelName, fontFamily = roboto_medium,modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Start)
-    Text(text = hotelDistance, color = DoveGrey, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Start)
-    Text(text = hotelPrice, fontFamily = roboto_medium, fontSize = 16.sp, fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.End)
+Image(contentScale = ContentScale.FillBounds,modifier = Modifier.weight(7f).fillMaxWidth().clip(shape = RoundedCornerShape(12.dp)), alignment = Alignment.TopCenter,painter = painterResource(imageRes), contentDescription = "")
+    Text(text = hotelName, fontFamily = roboto_medium,modifier = Modifier.weight(1f).fillMaxWidth(), textAlign = TextAlign.Start)
+    Text(text = hotelDistance, color = DoveGrey, modifier = Modifier.weight(1f).fillMaxWidth(), textAlign = TextAlign.Start)
+    Text(text = hotelPrice, fontFamily = roboto_medium, fontSize = 16.sp, fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth().weight(1f), textAlign = TextAlign.End)
 }
 }
 @Composable
@@ -160,7 +161,7 @@ fun SearchFieldSection() {
             .fillMaxWidth()
             .height(240.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceEvenly
+        verticalArrangement = Arrangement.Top
     ) {
         TextFieldComponent(
             label = "Kapsula Hotel Warszawa",
@@ -227,16 +228,17 @@ fun TextFieldComponent(label: String, resourcePath: Int, modifier: Modifier) {
 }
 
 @Composable
-fun BottomAppBarSection(choosenBottomBar: MutableState<Int>) {
+fun BottomAppBarSection(choosenBottomBar: MutableState<Int>,screenHeight:Int) {
 
     val bottomBarItemColors = NavigationBarItemDefaults.colors(
         selectedIconColor = PrimaryBlue,
         selectedTextColor = PrimaryBlue,
         unselectedIconColor = LighterDark,
-        unselectedTextColor = LighterDark
+        unselectedTextColor = LighterDark,
+        indicatorColor = Color.Transparent
     )
-    BottomAppBar(modifier = Modifier.background(Color.White),content = {
-        Row(modifier = Modifier.fillMaxWidth().background(Color.White), horizontalArrangement = Arrangement.SpaceEvenly) {
+    BottomAppBar(modifier = Modifier.fillMaxWidth().background(Color.White),content = {
+        Row(modifier = Modifier.fillMaxSize().background(Color.White), horizontalArrangement = Arrangement.SpaceEvenly) {
             NavigationBarItem(selected = choosenBottomBar.value == 0, onClick = {
                 choosenBottomBar.value = 0
             }, label = {
@@ -246,7 +248,7 @@ fun BottomAppBarSection(choosenBottomBar: MutableState<Int>) {
                     painter = painterResource(R.drawable.text_field_search),
                     contentDescription = ""
                 )
-            }, colors = bottomBarItemColors)
+            }, interactionSource = remember { MutableInteractionSource() }, colors = bottomBarItemColors)
             NavigationBarItem(selected = choosenBottomBar.value == 1, onClick = {
                 choosenBottomBar.value = 1
             }, label = {
@@ -297,6 +299,7 @@ fun TopBarChipsSection() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .fillMaxHeight()
             .horizontalScroll(state),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceAround
@@ -374,7 +377,7 @@ fun TopBarChipItem(title: String, resourcePath: Int) {
             selectedLabelColor = Color.White,
             selectedContainerColor = PrimaryBlue
         ),
-        modifier = Modifier.padding(horizontal = 4.dp),
+        modifier = Modifier.padding(horizontal = 4.dp,vertical = 4.dp),
         shape = RoundedCornerShape(size = 16.dp)
     )
 }
